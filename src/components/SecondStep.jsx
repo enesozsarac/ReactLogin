@@ -28,7 +28,6 @@ function SecondStep({ setActiveStep, back }) {
       setAge(savedAge);
       setTelNumber(savedTelNumber);
     }
-    sessionStorage.clear();
   }, []);
 
   return (

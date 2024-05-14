@@ -27,11 +27,11 @@ function FirstStep({ setActiveStep }) {
       setName(savedName);
       setSurname(savedSurname);
     }
-    sessionStorage.clear();
-
   }, []);
 
-
+  window.addEventListener("beforeunload", function () {
+    sessionStorage.clear();
+  });
 
   const handleNameChange = (e) => {
     setName(e.target.value);
