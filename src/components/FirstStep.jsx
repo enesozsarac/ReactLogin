@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function FirstStep({ setActiveStep }) {
   const [name, setName] = useState("");
@@ -9,14 +9,28 @@ function FirstStep({ setActiveStep }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (name && surname) {
+      sessionStorage.setItem("nameStorage", name);
+      sessionStorage.setItem("surnameStorage", surname);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (!name) {
       setNameError(true);
     } else if (!surname) {
       setSurnameError(true);
     }
+  };
+
+  useEffect(() => {
+    const savedName = sessionStorage.getItem("nameStorage");
+    const savedSurname = sessionStorage.getItem("surnameStorage");
+    if (savedName && savedSurname) {
+      setName(savedName);
+      setSurname(savedSurname);
+    }
+  }, []);
+
+  window.onload = function () {
+    sessionStorage.clear();
   };
 
   const handleNameChange = (e) => {

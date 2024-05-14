@@ -1,16 +1,18 @@
 import { Box, Button, Stack, TextField } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function SecondStep({ setActiveStep, back }) {
-  const [age, setAge] = useState();
+  const [age, setAge] = useState("");
   const [ageErr, setAgeErr] = useState(false);
-  const [telNumber, setTelNumber] = useState();
+  const [telNumber, setTelNumber] = useState("");
   const [telNumberErr, setTelNumberErr] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (age && telNumber) {
+      sessionStorage.setItem("ageStorage", age);
+      sessionStorage.setItem("telNumberStorage", telNumber);
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else if (!age) {
       setAgeErr(true);
@@ -18,6 +20,20 @@ function SecondStep({ setActiveStep, back }) {
       setTelNumberErr(true);
     }
   };
+
+  useEffect(() => {
+    const savedAge = sessionStorage.getItem("ageStorage");
+    const savedTelNumber = sessionStorage.getItem("telNumberStorage");
+    if (savedAge && savedTelNumber) {
+      setAge(savedAge);
+      setTelNumber(savedTelNumber);
+    }
+  }, []);
+
+  window.onload = function () {
+    sessionStorage.clear();
+  };
+
   return (
     <Box component="form" onSubmit={handleSubmit}>
       <TextField
