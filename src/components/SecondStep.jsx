@@ -28,11 +28,8 @@ function SecondStep({ setActiveStep, back }) {
       setAge(savedAge);
       setTelNumber(savedTelNumber);
     }
-  }, []);
-
-  window.onload = function () {
     sessionStorage.clear();
-  };
+  }, []);
 
   return (
     <Box component="form" onSubmit={handleSubmit}>
